@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#ffe7eb">
+  <title>老婆想你了要亲亲</title>
+  <style>
+    :root{--rose:#d82d5f;--ink:#4b2330}*{box-sizing:border-box}
+    html,body{margin:0;min-height:100%}body{color:var(--ink);font-family:"PingFang SC","Microsoft YaHei",system-ui,sans-serif;background:#fff5f5}
+    button{font:inherit;-webkit-tap-highlight-color:transparent}
+    .page{position:relative;min-height:100svh;overflow:hidden;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:28px 20px;background:radial-gradient(circle at 14% 16%,rgba(255,255,255,.92) 0 6%,transparent 18%),radial-gradient(circle at 85% 82%,rgba(255,205,214,.55) 0 8%,transparent 28%),linear-gradient(145deg,#fffaf6 0%,#ffe7eb 56%,#ffd3dc 100%)}
+    .page:before,.page:after{content:"♥";position:absolute;color:rgba(216,45,95,.08);font-family:serif;line-height:1}.page:before{font-size:220px;top:-48px;right:-45px;transform:rotate(14deg)}.page:after{font-size:170px;bottom:-38px;left:-32px;transform:rotate(-18deg)}
+    .card{position:relative;z-index:1;width:min(100%,420px);min-height:520px;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:52px 28px 46px;text-align:center;border:1px solid rgba(255,255,255,.85);border-radius:36px;background:rgba(255,255,255,.64);backdrop-filter:blur(18px);box-shadow:0 28px 80px rgba(139,40,67,.16),inset 0 1px rgba(255,255,255,.9)}
+    .mini{width:58px;height:58px;display:grid;place-items:center;margin-bottom:18px;border-radius:50%;color:#fff;font:32px/1 Georgia,serif;background:var(--rose);box-shadow:0 10px 30px rgba(216,45,95,.28);animation:pulse 1.7s ease-in-out infinite}
+    .eyebrow{margin:0 0 14px;color:#b36a7c;font-size:11px;font-weight:700;letter-spacing:.28em}.card h1{margin:0;font-size:clamp(38px,11vw,54px);line-height:1.18;letter-spacing:-.04em;font-weight:800}.hint{min-height:24px;margin:18px 0 35px;color:#9b6371;font-size:15px}
+    .choices{width:100%;min-height:118px;display:flex;align-items:center;justify-content:center;gap:24px}.choices button{min-width:112px;height:54px;border-radius:999px;border:0;font-size:17px;font-weight:700;cursor:pointer;transition:transform .28s cubic-bezier(.2,.8,.2,1),opacity .25s,box-shadow .25s;transform-origin:center}
+    #yes{position:relative;z-index:2;color:#fff;background:linear-gradient(135deg,#e63c70,#c91f53);box-shadow:0 12px 28px rgba(201,31,83,.28)}#no{color:#a55068;background:rgba(255,255,255,.82);border:1px solid #f3bdc9}
+    .foot{position:absolute;z-index:1;bottom:17px;margin:0;color:rgba(98,42,58,.48);font-size:12px;letter-spacing:.1em}
+    .success{text-align:center}.burst{position:relative;z-index:2;width:230px;height:230px;display:grid;place-items:center}.main-heart{color:var(--rose);font:150px/1 Georgia,serif;filter:drop-shadow(0 20px 24px rgba(216,45,95,.24));animation:heartPop .8s cubic-bezier(.2,1.4,.4,1) both,pulse 1.5s .8s infinite}.fly{position:absolute;top:50%;left:50%;color:#e33a6d;font:20px/1 Georgia,serif;opacity:0;animation:burst 1.5s var(--delay) cubic-bezier(.16,.75,.22,1) both}.success h1{position:relative;z-index:2;margin:12px 0 8px;font-size:clamp(36px,10vw,50px);letter-spacing:-.04em}.success p{position:relative;z-index:2;margin:0;color:#9b6371;font-size:17px}.again{position:relative;z-index:2;margin-top:28px;padding:11px 20px;border:1px solid #e9aebe;border-radius:999px;color:#a84260;background:rgba(255,255,255,.62);cursor:pointer}
+    @keyframes pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.08)}}@keyframes heartPop{0%{transform:scale(.15) rotate(-15deg);opacity:0}70%{transform:scale(1.15) rotate(4deg)}100%{transform:scale(1);opacity:1}}@keyframes burst{0%{transform:translate(-50%,-50%) scale(.2);opacity:0}15%{opacity:1}100%{transform:translate(-50%,-50%) rotate(var(--angle)) translateX(var(--distance)) rotate(calc(-1 * var(--angle))) scale(1.05);opacity:0}}
+    @media(max-width:420px){.page{padding:18px 15px}.card{min-height:min(530px,82svh);padding-inline:18px;border-radius:30px}.choices{gap:13px}.choices button{min-width:98px}}@media(prefers-reduced-motion:reduce){*,*:before,*:after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}}
+  </style>
+</head>
+<body>
+  <main id="app" class="page">
+    <section class="card">
+      <div class="mini">♥</div><p class="eyebrow">FOR MY LOVE</p>
+      <h1>老婆想你了<br>要亲亲</h1><p id="hint" class="hint">请选择你的答案</p>
+      <div class="choices"><button id="yes">同意</button><button id="no">不同意</button></div>
+    </section><p class="foot">今天也要好好爱老婆</p>
+  </main>
+  <script>
+    const lines=["再考虑一下嘛～","不可以选这个哦","真的不同意吗？","亲一下就好啦 💗","这次只能同意啦！"];let tries=0;
+    const app=document.querySelector("#app"),yes=document.querySelector("#yes"),no=document.querySelector("#no"),hint=document.querySelector("#hint");
+    no.onclick=()=>{tries=Math.min(tries+1,5);hint.textContent=lines[tries-1];yes.style.transform=`scale(${1+tries*.32})`;no.style.transform=`scale(${Math.max(.42,1-tries*.12)}) translate(${tries%2?12:-8}px,${tries*3}px)`;no.style.opacity=Math.max(.5,1-tries*.08)};
+    function showSuccess(){app.className="page success";let hearts="";for(let i=0;i<28;i++){hearts+=`<span class="fly" style="--angle:${360/28*i}deg;--distance:${130+i%5*24}px;--delay:${i%7*.04}s">♥</span>`}app.innerHTML=`<div class="burst">${hearts}<div class="main-heart">♥</div></div><h1>亲亲收到啦！</h1><p>老公也最想你了</p><button class="again" onclick="location.reload()">再看一次</button>`}
+    yes.onclick=showSuccess;
+  </script>
+</body>
+</html>
